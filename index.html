@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finite Automata Study Plan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #1a1a1a;
+            --accent-color: #3498db;
+            --completed-color: #2ecc71;
+            --break-color: #f1c40f;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Navigation */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 20px;
+        }
+
+        .navbar h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .navbar .reset-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 20px;
+            background-color: var(--accent-color);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        /* Study Plan Table */
+        .study-plan {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .study-plan th {
+            background-color: #f8f9fa;
+            padding: 15px;
+            text-align: left;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .study-plan tr {
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .study-plan td {
+            padding: 15px;
+            vertical-align: middle;
+        }
+
+        .checkbox {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--accent-color);
+            border-radius: 4px;
+            outline: none;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .checkbox:checked {
+            background-color: var(--completed-color);
+            border-color: var(--completed-color);
+        }
+
+        .checkbox:checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-weight: bold;
+        }
+
+        .break {
+            background-color: #f8f9fa;
+            color: #6c757d;
+            font-style: italic;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            border-top: 1px solid #e0e0e0;
+            margin-top: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            .navbar {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .navbar .reset-btn {
+                margin-top: 10px;
+            }
+
+            .study-plan {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <h1>Finite Automata Study Plan</h1>
+        <button class="reset-btn" onclick="resetProgress()">Reset Progress</button>
+    </nav>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div id="studyPlanContainer"></div>
+
+    <footer>
+        © 2025 Study Plan AI
+    </footer>
+
+    <script>
+        const studyPlanData = [
+            {
+                day: "Day 1: Introduction & Basics",
+                topics: [
+                    { time: "10:30 PM – 11:00 PM", topic: "Introduction to Finite Automata: Structural Representations, Automata and Complexity", isBreak: false },
+                    { time: "11:00 PM – 11:30 PM", topic: "Central Concepts: Alphabets, Strings, Languages, Problems", isBreak: false },
+                    { time: "11:30 PM – 11:40 PM", topic: "Break", isBreak: true },
+                    { time: "11:40 PM – 12:20 AM", topic: "NFA: Definition, Applications, Text Search", isBreak: false },
+                    { time: "12:20 PM – 12:50 AM", topic: "NFA with Epsilon-Transitions", isBreak: false },
+                    { time: "12:50 AM – 1:00 AM", topic: "Break", isBreak: true },
+                    { time: "1:00 AM – 1:40 AM", topic: "DFA: Definition, How DFA Processes Strings", isBreak: false },
+                    { time: "1:40 AM – 2:00 AM", topic: "Language of DFA, Conversion of NFA to DFA", isBreak: false }
+                ]
+            },
+            {
+                day: "Day 2: Regular Expressions & Context-Free Grammars",
+                topics: [
+                    { time: "10:30 PM – 11:00 PM", topic: "Regular Expressions: Basic Syntax and Pattern Matching", isBreak: false },
+                    { time: "11:00 PM – 11:30 PM", topic: "Kleene Star and Closure Properties", isBreak: false },
+                    { time: "11:30 PM – 11:40 PM", topic: "Break", isBreak: true },
+                    { time: "11:40 PM – 12:20 AM", topic: "Context-Free Grammars: Definition and Structure", isBreak: false },
+                    { time: "12:20 PM – 12:50 AM", topic: "Parsing Techniques and Derivation Trees", isBreak: false },
+                    { time: "12:50 AM – 1:00 AM", topic: "Break", isBreak: true },
+                    { time: "1:00 AM – 1:40 AM", topic: "Chomsky Normal Form", isBreak: false },
+                    { time: "1:40 AM – 2:00 AM", topic: "CFG to PDA Conversion", isBreak: false }
+                ]
+            },
+            {
+                day: "Day 3: Pushdown Automata & Turing Machines",
+                topics: [
+                    { time: "10:30 PM – 11:00 PM", topic: "Pushdown Automata: Basic Concepts", isBreak: false },
+                    { time: "11:00 PM – 11:30 PM", topic: "PDA State Transitions and Stack Operations", isBreak: false },
+                    { time: "11:30 PM – 11:40 PM", topic: "Break", isBreak: true },
+                    { time: "11:40 PM – 12:20 AM", topic: "Turing Machines: Theoretical Foundation", isBreak: false },
+                    { time: "12:20 PM – 12:50 AM", topic: "Turing Machine Configurations and Computations", isBreak: false },
+                    { time: "12:50 AM – 1:00 AM", topic: "Break", isBreak: true },
+                    { time: "1:00 AM – 1:40 AM", topic: "Universal Turing Machine", isBreak: false },
+                    { time: "1:40 AM – 2:00 AM", topic: "Halting Problem and Computability", isBreak: false }
+                ]
+            }
+        ];
+
+        function createStudyPlan() {
+            const container = document.getElementById('studyPlanContainer');
+            studyPlanData.forEach((dayPlan, dayIndex) => {
+                const table = document.createElement('table');
+                table.className = 'study-plan';
+                
+                const headerRow = table.insertRow();
+                headerRow.innerHTML = `<th colspan="3">${dayPlan.day}</th>`;
+                
+                const subHeaderRow = table.insertRow();
+                subHeaderRow.innerHTML = `
+                    <th>Time</th>
+                    <th>Topic</th>
+                    <th>Completed</th>
+                `;
+
+                dayPlan.topics.forEach((topic, topicIndex) => {
+                    const row = table.insertRow();
+                    row.innerHTML = `
+                        <td>${topic.time}</td>
+                        <td class="${topic.isBreak ? 'break' : ''}">${topic.topic}</td>
+                        <td>
+                            <input 
+                                type="checkbox" 
+                                class="checkbox" 
+                                id="day${dayIndex}-topic${topicIndex}"
+                                ${topic.isBreak ? 'disabled' : ''}
+                                onchange="updateProgress()"
+                            >
+                        </td>
+                    `;
+                });
+
+                container.appendChild(table);
+            });
+
+            // Load saved progress
+            loadProgress();
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const checkboxes = document.querySelectorAll('.checkbox:not(:disabled)');
+            const completedCheckboxes = document.querySelectorAll('.checkbox:not(:disabled):checked');
+            const progressBar = document.getElementById('progressBar');
+            
+            const progressPercentage = (completedCheckboxes.length / checkboxes.length) * 100;
+            progressBar.style.width = `${progressPercentage}%`;
+
+            // Save progress to local storage
+            const progressState = Array.from(checkboxes).map(checkbox => checkbox.checked);
+            localStorage.setItem('studyPlanProgress', JSON.stringify(progressState));
+        }
+
+        function loadProgress() {
+            const savedProgress = localStorage.getItem('studyPlanProgress');
+            if (savedProgress) {
+                const progressState = JSON.parse(savedProgress);
+                const checkboxes = document.querySelectorAll('.checkbox:not(:disabled)');
+                
+                progressState.forEach((isChecked, index) => {
+                    if (checkboxes[index]) {
+                        checkboxes[index].checked = isChecked;
+                    }
+                });
+            }
+        }
+
+        function resetProgress() {
+            const checkboxes = document.querySelectorAll('.checkbox:not(:disabled)');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            updateProgress();
+            localStorage.removeItem('studyPlanProgress');
+        }
+
+        // Initialize the study plan on page load
+        createStudyPlan();
+    </script>
+</body>
+</html>
